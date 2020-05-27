@@ -58,7 +58,7 @@ shinyServer(function(input, output) {
 #        x <- df[,6]
  #       barplot(x, )
         
-        p = ggplot(data=df, aes(x=county_name, y=strtoi(df[[(input$dates[1]-1970)+11]]))) + geom_bar(stat="identity") + ggtitle(paste(input$state, input$dates[1])) + xlab("Counties") + ylab("Population")    
+        p = ggplot(data=df, aes(x=county_name, y=strtoi(df[[(input$dates[1]-1970)+11]]))) + geom_bar(stat="identity") + ggtitle(paste("Population of", input$state, input$dates[1])) + xlab("Counties") + ylab("Population")    
         # generate bins based on input$bins from ui.R
         #x    <- faithful[, 2]
         #bins <- seq(min(x), max(x), length.out = input$bins + 1)
@@ -71,7 +71,7 @@ shinyServer(function(input, output) {
 
         df = filter(popdata, state_name == input$state & county_name != input$state)
         
-        p = ggplot(data=df, aes(x=county_name, y=strtoi(df[[(input$dates[2]-1970)+11]]))) + geom_bar(stat="identity") + xlab("Counties") + ylab("Population") + ggtitle(paste(input$state, input$dates[2]))     
+        p = ggplot(data=df, aes(x=county_name, y=strtoi(df[[(input$dates[2]-1970)+11]]))) + geom_bar(stat="identity") + xlab("Counties") + ylab("Population") + ggtitle(paste("Population of", input$state, input$dates[2]))     
         ggplotly(p)
     })
     output$popPlot3 <- renderPlotly({
@@ -83,7 +83,7 @@ shinyServer(function(input, output) {
         df2 <- melt(df1, id.vars='County')
 
         p = ggplot(df2, aes(x=County, y=value, fill=variable)) +
-            geom_bar(stat='identity', position='dodge') + xlab("Counties") + ylab("Population")
+            geom_bar(stat='identity', position='dodge') + xlab("Counties") + ylab("Population")+ggtitle(paste("Population Comparison of", input$state, input$dates[1], "-", input$dates[2]))
         ggplotly(p)
     })
     output$popPlot4 <- renderPlotly({
